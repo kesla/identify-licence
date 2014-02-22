@@ -11,7 +11,7 @@
   "homepage": "https://github.com/kesla/identify-licence",
   "repository": {
     "type": "git",
-    "url": "git://github.com/iandotkelly/identify-licence.git"
+    "url": "git://github.com/kesla/identify-licence.git"
   },
   "dependencies": {},
   "devDependencies": {
