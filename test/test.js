@@ -1,6 +1,6 @@
 var test = require('tap').test
 
-	,	licenseFind = require('../../lib/license-find')
+	,	licenseFind = require('../identify-licence')
 
 test('with GPL text', function (t) {
 
