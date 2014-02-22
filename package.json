@@ -1,7 +1,7 @@
 {
   "name": "identify-licence",
   "title": "Identify licence",
-  "description": "Identify a license from text. Extracted from ",
+  "description": "Identify a license from text. Extracted from https://www.npmjs.org/package/nlf",
   "author": "David Björklund <david.bjorklund@gmail.com>",
   "contributors": [
     "Ian Kelly <iandotkelly@gmail.com>"

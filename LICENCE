@@ -1,29 +1,6 @@
-<!-- @@NLF-IGNORE@@ -->
+Copyright (c) 2013 - 2014 Ian Kelly, David Björklund
 
-# identify-licence
-
-identify-licence is a node.js module to identify licences from strings of text
-
-## Kudos
-
-This basis from this project was extracted from the npm package nlf (https://www.npmjs.org/package/nlf)
-
-### Example/Usage
-
-```javascript
-var identifyLicence = require('./identify-licence')
-  , thisLicence = require('fs').readFileSync('./LICENCE', 'utf8')
-  , multipleLicenses = 'blah MIT blah\n\ncats GPL cats'
-
-console.log('This project is', identifyLicence(thisLicence))
-console.log('Dual licences works to:', identifyLicence(multipleLicenses))
-```
-
-## License
-
-[The MIT License (MIT)](http://opensource.org/licenses/MIT)
-
-Copyright (c) 2013 Ian Kelly, David Björklund
+MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -42,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
