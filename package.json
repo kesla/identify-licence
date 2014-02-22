@@ -1,44 +1,28 @@
 {
-  "name": "nlf",
-  "title": "Node License Finder",
-  "description": "Find licenses for a node application and its node_module dependencies",
-  "author": "Ian Kelly <iandotkelly@gmail.com>",
-  "version": "0.2.7",
+  "name": "identify-licence",
+  "title": "Identify licence",
+  "description": "Identify a license from text. Extracted from ",
+  "author": "David Björklund <david.bjorklund@gmail.com>",
+  "contributors": ["Ian Kelly <iandotkelly@gmail.com>"],
+  "version": "0.0.1",
   "license": "MIT",
-  "bin": {
-    "nlf": "./bin/nlf-cli.js"
-  },
-  "homepage": "https://github.com/iandotkelly/nlf",
+  "homepage": "https://github.com/kesla/identify-licence",
   "repository": {
     "type": "git",
-    "url": "git://github.com/iandotkelly/nlf.git"
+    "url": "git://github.com/iandotkelly/identify-licence.git"
   },
-  "dependencies": {
-    "commander": "~2.1.0",
-    "read-installed": "~1.0.0",
-    "glob": "~3.2.7",
-    "archy": "~0.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "jshint": "~2.4.3",
     "should": "~3.1.2",
-    "mocha": "~1.17.1",
-    "globs": "~0.1.1"
-  },
-  "engines": {
-    "node": ">=0.6"
+    "mocha": "~1.17.1"
   },
   "keywords": [
     "license",
     "licence",
-    "checker",
-    "finder",
-    "audit",
-    "legal",
-    "dependency",
-    "cli"
+    "identifier",
+    "legal"
   ],
   "scripts": {
-    "test": "make"
+    "test": "node test/test.js"
   }
 }
