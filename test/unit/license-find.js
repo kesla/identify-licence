@@ -1,246 +1,99 @@
-/**
- * @description Unit tests for the license-find.js module
- *
- * @@NLF-IGNORE@@
- */
+var test = require('tap').test
 
-'use strict';
+	,	licenseFind = require('../../lib/license-find')
 
-var licenseFind = require('../../lib/license-find');
+test('with GPL text', function (t) {
 
-require('should');
+	t.deepEqual(licenseFind('blah GPL blah'), ['GPL'])
+	t.deepEqual(licenseFind('GPL blah'), ['GPL'])
+	t.end()
+})
 
-describe('license-find', function () {
-	/* jshint maxstatements:20 */
+test('with LGPL text', function (t) {
 
-	it('should be a function', function () {
-		licenseFind.should.be.a.function;
-	});
+	t.deepEqual(licenseFind('blah LGPL blah'), ['LGPL'])
+	t.deepEqual(licenseFind('LGPL blah'), ['LGPL'])
+	t.end()
+})
 
-	describe('with GPL text', function () {
+test('with GPLvx text', function (t) {
 
-		it('should return GPL', function () {
-			var output = licenseFind('blah GPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('GPL');
+	t.deepEqual(licenseFind('blah GPLv2 blah'), ['GPL'])
+	t.deepEqual(licenseFind('blah GPLv9 blah'), ['GPL'])
+	t.deepEqual(licenseFind('GPLv2 blah'), ['GPL'])
+	t.end()
+})
 
-		});
+test('with MIT text', function (t) {
 
-		it('at the start should still return GPL', function () {
-			var output = licenseFind('GPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('GPL');
-		});
-	});
+	t.deepEqual(licenseFind('blah MIT blah'), ['MIT'])
+	t.deepEqual(licenseFind('MIT blah'), ['MIT'])
+	t.end()
+})
 
-	describe('with LGPL text', function () {
+test('with (MIT) text', function (t) {
 
-		it('should return LGPL', function () {
-			var output = licenseFind('blah LGPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('LGPL');
-		});
+	t.deepEqual(licenseFind('blah (MIT) blah'), ['MIT'])
+	t.deepEqual(licenseFind('(MIT) blah'), ['MIT'])
+	t.end()
+})
 
-		it('at the start should still return LGPL', function () {
-			var output = licenseFind('LGPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('LGPL');
-		});
+test('with MPL text', function (t) {
+	t.deepEqual(licenseFind('blah MPL blah'), ['MPL'])
+	t.deepEqual(licenseFind('MPL blah'), ['MPL'])
+	t.end()
+})
 
-	});
+test('with Apache License text', function (t) {
+	t.deepEqual(licenseFind('blah Apache\nLicense blah'), ['Apache'])
+	t.deepEqual(licenseFind('Apache\nLicense blah'), ['Apache'])
+	t.end()
+})
 
-	describe('with GPLvx text', function () {
+test('with DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE text', function (t) {
+	t.deepEqual(licenseFind('blah DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE blah'), ['WTFPL'])
+	t.deepEqual(licenseFind('DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE blah'), ['WTFPL'])
+	t.deepEqual(licenseFind('dO WHAT the fUck you want tO PUBLIC licensE blah'), ['WTFPL'])
+	t.deepEqual(licenseFind('blah DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE blah'), ['WTFPL'])
+	t.end()
+})
 
-		it('should return GPL', function () {
-			var output = licenseFind('blah GPLv2 blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('GPL');
+test('with ISC text', function (t) {
 
-			output = licenseFind('blah GPLv9 blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('GPL');
-		});
+	t.deepEqual(licenseFind('blah ISC blah'), ['ISC'])
+	t.deepEqual(licenseFind('ISC blah'), ['ISC'])
+	t.end()
+})
 
-		it('at the start should still return GPL', function () {
-			var output = licenseFind('GPLv2 blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('GPL');
-		});
-	});
+test('with Eclipse Public License text', function (t) {
 
-	describe('with MIT text', function () {
+	t.test('in full', function (t) {
 
-		it('should return MIT', function () {
-			var output = licenseFind('blah MIT blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MIT');
-		});
+		t.deepEqual(licenseFind('blah EPL blah'), ['Eclipse Public License'])
+		t.end()
+	})
 
-		it('at the start should still return MIT', function () {
-			var output = licenseFind('MIT blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MIT');
-		});
+	t.test('in abbreviation', function (t) {
 
-	});
+		t.deepEqual(licenseFind('blah EPL blah'), ['Eclipse Public License'])
+		t.deepEqual(licenseFind('blah EPL-1.0 blah'), ['Eclipse Public License'])
+		t.deepEqual(licenseFind('EPL blah'), ['Eclipse Public License'])
+		t.deepEqual(licenseFind('EPL-1.0 blah'), ['Eclipse Public License'])
+		t.end()
+	})
 
-	describe('with (MIT) text', function () {
+	t.end()
+})
 
-		it('should return MIT', function () {
-			var output = licenseFind('blah (MIT) blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MIT');
-		});
+test('with BSD text', function (t) {
 
-		it('at the start should still return MIT', function () {
-			var output = licenseFind('(MIT) blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MIT');
-		});
-	});
+	t.deepEqual(licenseFind('blah BSD blah'), ['BSD'])
+	t.deepEqual(licenseFind('BSD blah'), ['BSD'])
+	t.end()
+})
 
-	describe('with MPL text', function () {
+test('with dual license, e.g. GPL & MIT text', function (t) {
 
-		it('should return MPL', function () {
-			var output = licenseFind('blah MPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MPL');
-		});
-
-		it('at the start should still return MPL', function () {
-			var output = licenseFind('MPL blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('MPL');
-		});
-
-	});
-
-	describe('with Apache License text', function () {
-
-		it('should return Apache', function () {
-			var output = licenseFind('blah Apache\nLicense blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('Apache');
-		});
-
-		it('at the start should still return Apache', function () {
-			var output = licenseFind('Apache\nLicense blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('Apache');
-		});
-	});
-
-
-	describe('with DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE text', function () {
-
-		it('should return WTFPL', function () {
-			var output =
-				licenseFind('blah DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('WTFPL');
-		});
-
-		it('at the start should still return WTFPL', function () {
-			var output = licenseFind('DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('WTFPL');
-		});
-
-
-		it('in any case should still return WTFPL', function () {
-			var output = licenseFind('dO WHAT the fUck you want tO PUBLIC licensE blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('WTFPL');
-		});
-
-
-		it('with British spelling should still return WTFPL', function () {
-			var output =
-				licenseFind('blah DO WHAT THE FUCK YOU WANT TO PUBLIC LICENCE blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('WTFPL');
-		});
-	});
-
-
-	describe('with ISC text', function () {
-
-		it('should return ISC', function () {
-			var output =
-				licenseFind('blah ISC blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('ISC');
-		});
-
-		it('at the start should still return ISC', function () {
-			var output = licenseFind('ISC blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('ISC');
-		});
-
-	});
-
-	describe('with Eclipse Public License text', function () {
-
-		describe('in full', function () {
-
-			it('should return Eclipse Public License', function () {
-				var output =
-					licenseFind('blah EPL blah');
-				output.length.should.be.equal(1);
-				output[0].should.be.equal('Eclipse Public License');
-			});
-		});
-
-		describe('in abbreviation', function () {
-
-			it('should return Eclipse Public License', function () {
-				var output = licenseFind('blah EPL blah');
-				output.length.should.be.equal(1);
-				output[0].should.be.equal('Eclipse Public License');
-
-				output = licenseFind('blah EPL-1.0 blah');
-				output.length.should.be.equal(1);
-				output[0].should.be.equal('Eclipse Public License');
-			});
-
-			it('at the start should still return Eclipse Public License', function () {
-				var output = licenseFind('EPL blah');
-				output.length.should.be.equal(1);
-				output[0].should.be.equal('Eclipse Public License');
-
-				output = licenseFind('EPL-1.0 blah');
-				output.length.should.be.equal(1);
-				output[0].should.be.equal('Eclipse Public License');
-
-			});
-
-		});
-	});
-
-	describe('with BSD text', function () {
-
-		it('should return BSD', function () {
-			var output = licenseFind('blah BSD blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('BSD');
-		});
-
-		it('at the start should still return BSD', function () {
-			var output = licenseFind('BSD blah');
-			output.length.should.be.equal(1);
-			output[0].should.be.equal('BSD');
-		});
-	});
-
-	describe('with dual license, e.g. GPL & MIT text', function () {
-
-		it('should return GPL & MIT', function () {
-			var output = licenseFind('blah MIT blah\n\ncats GPL cats');
-			output.length.should.be.equal(2);
-			output[0].should.be.equal('GPL');
-			output[1].should.be.equal('MIT');
-		});
-
-	});
-});
+	t.deepEqual(licenseFind('blah MIT blah\n\ncats GPL cats'), ['GPL', 'MIT'])
+	t.end()
+})
